@@ -132,10 +132,6 @@ void Rtype::udpClient::setHandleMaps()
 {
     setHandleGameInfoMap();
     setHandlePlayerMap();
-    setHandleEnemyMap();
-    setHandleBossMap();
-    setHandlePowerUpMap();
-    setHandleProjectileMap();
 }
 
 void Rtype::udpClient::setHandleGameInfoMap()
@@ -212,16 +208,6 @@ void Rtype::udpClient::setHandleGameInfoMap()
         }
     };
 
-    _handleGameInfoMap[Utils::GameInfoEnum::SafetyCheck] = [this](Utils::Network::Response response) {
-        std::cerr << "Safety check received." << std::endl;
-    };
-
-    _handleGameInfoMap[Utils::GameInfoEnum::LevelComplete] = [this](Utils::Network::Response response) {
-        int level = response.PopParam<int>();
-
-        std::cerr << "Level " << level << " completed." << std::endl;
-        //? Changer le fond ?
-    };
     _handleGameInfoMap[Utils::GameInfoEnum::ClientDisconnect] = [this](Utils::Network::Response response) {
         int id = response.PopParam<int>();
 
@@ -240,162 +226,14 @@ void Rtype::udpClient::setHandleGameInfoMap()
 };
 
 
-void Rtype::udpClient::setHandlePlayerMap() {
-    _handlePlayerMap[Utils::PlayerEnum::PlayerSpawnOnGame] = [this](Utils::Network::Response response) {
-        int new_player_id = response.PopParam<int>();
-        float x = response.PopParam<double>();
-        float y = response.PopParam<double>();
-
-        _game->createOtherPlayer(new_player_id, x, y);
-    };
-
-
-    _handlePlayerMap[Utils::PlayerEnum::PlayerDie] = [this](Utils::Network::Response response) {
-        std::unique_ptr<Rtype::Command::Player::Die> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Die, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerDie);
-        int playerId = response.PopParam<int>();
-    };
-
-
-    _handlePlayerMap[Utils::PlayerEnum::PlayerMove] = [this](Utils::Network::Response response) {
-        int player_id = response.PopParam<int>();
-        double x = response.PopParam<double>();
-        double y = response.PopParam<double>();
-
-        _game->movePlayer(player_id, x, y);
-    };
-
-    _handlePlayerMap[Utils::PlayerEnum::Position] = [this](Utils::Network::Response response) {
-        int player_id = response.PopParam<int>();
-        double x = response.PopParam<double>();
-        double y = response.PopParam<double>();
-
-        _game->setPlayerPos(player_id, x, y);
-    };
-
+void Rtype::udpClient::setHandlePlayerMap()
+{
     _handlePlayerMap[Utils::PlayerEnum::PlayerAttack] = [this](Utils::Network::Response response) {
         std::unique_ptr<Rtype::Command::Player::Attack> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Attack, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerAttack);
 
         int missileId = response.PopParam<int>();
-
-    };
-
-
-    _handlePlayerMap[Utils::PlayerEnum::PlayerGotPowerUp] = [this](Utils::Network::Response response) {
-        int playerId = response.PopParam<int>();
-        int powerUpId = response.PopParam<int>();
-
-        CONSOLE_INFO("playerId -> ", playerId);
-        CONSOLE_INFO("podId -> ", powerUpId);
-        _game->equipPod(playerId, powerUpId);
-    };
-
-
-    _handlePlayerMap[Utils::PlayerEnum::PlayerHitAWall] = [this](Utils::Network::Response response) {
-        std::unique_ptr<Rtype::Command::Player::Hit_wall> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Hit_wall, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerHitAWall);
-        int playerId = response.PopParam<int>();
-    };
-
-
-    _handlePlayerMap[Utils::PlayerEnum::PlayerScore] = [this](Utils::Network::Response response) {
-        std::unique_ptr<Rtype::Command::Player::Score> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Score, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerScore);        int score = response.PopParam<int>();
-
-        std::cerr << "The unused Score is: " << score << std::endl;
     };
 }
-
-void Rtype::udpClient::setHandleEnemyMap() {
-    _handleEnemyMap[Utils::EnemyEnum::EnemySpawn] = [this](Utils::Network::Response response) {
-        int enemyType = response.PopParam<int>();
-        int enemyId = response.PopParam<int>();
-        double x = response.PopParam<double>();
-        double y = response.PopParam<double>();
-        int health = response.PopParam<int>();
-
-        _game->createEnemy(enemyId, static_cast<enemiesTypeEnum_t>(enemyType), x, y, health);
-    };
-    _handleEnemyMap[Utils::EnemyEnum::EnemyDie] = [this](Utils::Network::Response response) {
-        int enemyId = response.PopParam<int>();
-
-        _game->damageEntity(enemyId);
-        CONSOLE_INFO(enemyId, " passed away...");
-    };
-
-    _handleEnemyMap[Utils::EnemyEnum::EnemyMove] = [this](Utils::Network::Response response) {
-    };
-    _handleEnemyMap[Utils::EnemyEnum::EnemyAttack] = [this](Utils::Network::Response response) {
-        int enemyId = response.PopParam<int>();
-    };
-    _handleEnemyMap[Utils::EnemyEnum::EnemyDestroy] = [this](Utils::Network::Response response) {
-        int enemyId = response.PopParam<int>();
-
-        CONSOLE_INFO(enemyId, _destroyMin)
-        if (enemyId >= _destroyMin) {
-            CONSOLE_INFO(enemyId, " is destroyed")
-            _game->destroyEntity(enemyId);
-        }
-    };
-    _handleEnemyMap[Utils::EnemyEnum::EnemyDamage] = [this](Utils::Network::Response response) {
-        int enemyId = response.PopParam<int>();
-
-        CONSOLE_INFO(enemyId, " take damages")
-        _game->damageEntity(enemyId);
-    };
-};
-
-void Rtype::udpClient::setHandlePowerUpMap() {
-    _handlePowerUpMap[Utils::PowerUpEnum::PowerUpSpawn] = [this](Utils::Network::Response response) {
-        int id = response.PopParam<int>();
-        double x = response.PopParam<double>();
-        double y = response.PopParam<double>();
-
-        _game->createPod(id, x, y);
-    };
-    _handlePowerUpMap[Utils::PowerUpEnum::PowerUpDisappear] = [this](Utils::Network::Response response) {
-        //TODO: Implement PowerUpDisappear
-    };
-    _handlePowerUpMap[Utils::PowerUpEnum::PowerUpAttack] = [this](Utils::Network::Response response) {
-        //TODO Implemnt PowerUpAttack
-    };
-}
-
-
-void Rtype::udpClient::setHandleProjectileMap() {
-    _handleProjectileMap[Utils::ProjectileEnum::ProjectileFired] = [this](Utils::Network::Response response) {
-        int entityID = response.PopParam<int>();
-        int projectileID = response.PopParam<int>();
-
-        _game->createProjectile(entityID, projectileID);
-    };
-
-    _handleProjectileMap[Utils::ProjectileEnum::ProjectileHit] = [this](Utils::Network::Response response) {
-    };
-}
-
-void Rtype::udpClient::setHandleBossMap() {
-    _handleBossMap[Utils::BossEnum::BossSpawn] = [this](Utils::Network::Response response) {
-        int enemyType = response.PopParam<int>();
-        int enemyId = response.PopParam<int>();
-        double x = response.PopParam<double>();
-        double y = response.PopParam<double>();
-        int health = response.PopParam<int>();
-
-        _game->createBoss(enemyId, static_cast<enemiesTypeEnum_t>(enemyType), x, y, health);
-    };
-
-    _handleBossMap[Utils::BossEnum::BossDie] = [this](Utils::Network::Response response) {
-        int BossType = response.PopParam<int>();
-    };
-
-    _handleBossMap[Utils::BossEnum::BossAttack] = [this](Utils::Network::Response response) {
-        int BossType = response.PopParam<int>();
-        int BossAttackType = response.PopParam<int>();
-    };
-
-    _handleBossMap[Utils::BossEnum::BossAttack] = [this](Utils::Network::Response response) {
-        int BossID = response.PopParam<int>();
-    };
-}
-
 
 void Rtype::udpClient::handleResponse(Utils::Network::Response clientResponse)
 {
@@ -406,11 +244,8 @@ void Rtype::udpClient::handleResponse(Utils::Network::Response clientResponse)
     if (ack > _biggestAck)
         _biggestAck = ack;
 
-    if (((int)cmd_category != 1 && (int)clientResponse.GetInfoFunction() != 2) &&
-        ((int)cmd_category != 5 && (int)clientResponse.GetInfoFunction() != 0)) {
-        CONSOLE_INFO("Handle Response category: ", (int)cmd_category)
-        CONSOLE_INFO("Handle Response index: ", (int)clientResponse.GetInfoFunction())
-    }
+    CONSOLE_INFO("Handle Response category: ", (int)cmd_category)
+    CONSOLE_INFO("Handle Response index: ", (int)clientResponse.GetInfoFunction())
 
     try {
     switch (cmd_category) {
@@ -419,18 +254,6 @@ void Rtype::udpClient::handleResponse(Utils::Network::Response clientResponse)
         break;
     case Utils::InfoTypeEnum::Player:
         _handlePlayerMap[static_cast<Utils::PlayerEnum>(clientResponse.GetInfoFunction())](clientResponse);
-        break;
-    case  Utils::InfoTypeEnum::Enemy:
-        _handleEnemyMap[static_cast<Utils::EnemyEnum>(clientResponse.GetInfoFunction())](clientResponse);
-        break;
-    case  Utils::InfoTypeEnum::PowerUp:
-        _handlePowerUpMap[static_cast<Utils::PowerUpEnum>(clientResponse.GetInfoFunction())](clientResponse);
-        break;
-    case  Utils::InfoTypeEnum::Projectile:
-        _handleProjectileMap[static_cast<Utils::ProjectileEnum>(clientResponse.GetInfoFunction())](clientResponse);
-        break;
-    case  Utils::InfoTypeEnum::Boss:
-        _handleBossMap[static_cast<Utils::BossEnum>(clientResponse.GetInfoFunction())](clientResponse);
         break;
     default:
         std::cerr << "Unknown command category." << std::endl;
@@ -444,18 +267,6 @@ void Rtype::udpClient::handleResponse(Utils::Network::Response clientResponse)
                 break;
             case Utils::InfoTypeEnum::Player:
                 std::cerr << "PlayerEnum: " << (int)clientResponse.GetInfoFunction() << std::endl;
-                break;
-            case  Utils::InfoTypeEnum::Enemy:
-                std::cerr << "EnemyEnum: " << (int)clientResponse.GetInfoFunction() << std::endl;
-                break;
-            case  Utils::InfoTypeEnum::PowerUp:
-                std::cerr << "PowerUpEnum: " << (int)clientResponse.GetInfoFunction() << std::endl;
-                break;
-            case  Utils::InfoTypeEnum::Projectile:
-                std::cerr << "ProjectileEnum: " << (int)clientResponse.GetInfoFunction() << std::endl;
-                break;
-            case  Utils::InfoTypeEnum::Boss:
-                std::cerr << "BossEnum: " << (int)clientResponse.GetInfoFunction() << std::endl;
                 break;
             default:
                 std::cerr << "Unknown command category." << std::endl;

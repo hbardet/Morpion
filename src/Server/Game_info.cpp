@@ -100,90 +100,11 @@ void Rtype::Game_info::runGame()
 
 void Rtype::Game_info::computeGame(int currentGameTimeInSeconds)
 {
-    std::vector<int> FIIIIIRRRREEEEBros = _game->getAIProjectile();
-    std::vector<int> deadBros = _game->getDeadEntities();
-
-    for (auto enemyId: FIIIIIRRRREEEEBros) {
-        std::unique_ptr<Rtype::Command::Projectile::Fired> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Projectile::Fired, Utils::InfoTypeEnum::Projectile, Utils::ProjectileEnum::ProjectileFired);
-
-        cmd->set_server(getPlayers(), enemyId, getNbProjectiles()); //! tmp
-        cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-        _network->addCommandToInvoker(std::move(cmd));
-        accNbProjectiles();
-    }
-    for (auto entityId: deadBros) {
-        std::unique_ptr<Rtype::Command::Enemy::Destroy> destroy_cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Enemy::Destroy, Utils::InfoTypeEnum::Enemy, Utils::EnemyEnum::EnemyDestroy);
-
-        destroy_cmd->set_server(getPlayers(), entityId, getRoomId());
-        destroy_cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-        _network->addCommandToInvoker(std::move(destroy_cmd));
-        _game->destroyEntity(entityId);
-    }
-    if (!_enemySpawnData.empty()) {
-        Rtype::EnemySpawnData enemyData = _enemySpawnData.top();
-
-        if (enemyData.getDifficulty() > _difficulty)
-            _enemySpawnData.pop();
-        else if (currentGameTimeInSeconds - _timeLastLevelEnded >= enemyData.getSpawnTimeInSeconds()) {
-            if (enemyData.getType() != enemiesTypeEnum_t::BOSS1_Core) {
-                std::unique_ptr<Rtype::Command::Enemy::Spawn> spawn_cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Enemy::Spawn, Utils::InfoTypeEnum::Enemy, Utils::EnemyEnum::EnemySpawn);
-
-                spawn_cmd->set_server(_players, enemyData.getType(), getNbProjectiles(), enemyData.getPositionX(), enemyData.getPositionY(), enemyData.getHealth());
-                spawn_cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-                _network->addCommandToInvoker(std::move(spawn_cmd));
-                _game->createEnemy( getNbProjectiles(), enemyData.getType(), enemyData.getPositionX(), enemyData.getPositionY(), enemyData.getHealth());
-            } else if (enemyData.getType() == enemiesTypeEnum_t::BOSS1_Core) {
-                std::unique_ptr<Rtype::Command::Boss::Spawn> spawn_cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Boss::Spawn, Utils::InfoTypeEnum::Boss, Utils::BossEnum::BossSpawn);
-
-                spawn_cmd->set_server(_players, enemyData.getType(), getNbProjectiles(), enemyData.getPositionX(), enemyData.getPositionY(), enemyData.getHealth());
-                spawn_cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-                _network->addCommandToInvoker(std::move(spawn_cmd));
-                _game->createEnemy( getNbProjectiles(), enemyData.getType(), enemyData.getPositionX(), enemyData.getPositionY(), enemyData.getHealth());
- 
-            }
-            accNbProjectiles();
-            _enemySpawnData.pop();
-        }
-    }
-    if (_enemySpawnData.empty()) {
-        std::unique_ptr<Rtype::Command::GameInfo::Level_complete> lvl_cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Level_complete, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::LevelComplete);
-        
-        _timeLastLevelEnded = currentGameTimeInSeconds;
-        goNextLevel();
-        CONSOLE_INFO(getRoomId(), " went to the next Level !")
-        lvl_cmd->set_server(getPlayers(), getLevel());
-        lvl_cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-        _network->addCommandToInvoker(std::move(lvl_cmd));
-    }
 }
 
 void Rtype::Game_info::computePlayer()
 {
-
-    //! Disabled for now
-    // for (auto i_player = _players->begin(); i_player != _players->end(); i_player++) {
-    //     std::shared_ptr<Rtype::client_info> receiver = i_player->second;
-        
-    //     for (auto player = _players->begin(); player != _players->end(); player++) 
-    //     {   
-    //         if (player->second->isAlive() == false)
-    //             continue;
-    //         // Create a new unique_ptr for each command
-    //         auto cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Position, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::Position);
-            
-    //         // Check cmd was successfully created
-    //         if (cmd) {
-    //             cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), receiver->getAckToSend());
-    //             cmd->setClientInfo(receiver);
-    //             cmd->set_server(player->second->getId(), player->second->getX(), player->second->getY());
-
-    //             // Move cmd into addCommandToInvoker to transfer ownership
-    //             _network->addCommandToInvoker(std::move(cmd));
-    //         }
-    //     }
-    // }
 }
-
 
 void Rtype::Game_info::computeTick(void)
 {

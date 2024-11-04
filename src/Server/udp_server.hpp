@@ -122,15 +122,9 @@ namespace Rtype {
             void setHandleMaps();
             void setHandleGameInfoMap();
             void setHandlePlayerMap();
-            void setHandlePowerUpMap();
-            void setHandleEnemyMap();
-            void setHandleProjectileMap();
 
             std::unordered_map<Utils::GameInfoEnum, std::function<void(Utils::Network::Response)>> _handleGameInfoMap;
             std::unordered_map<Utils::PlayerEnum, std::function<void(Utils::Network::Response)>> _handlePlayerMap;
-            std::unordered_map<Utils::PowerUpEnum, std::function<void(Utils::Network::Response)>> _handlePowerUpMap;
-            std::unordered_map<Utils::ProjectileEnum, std::function<void(Utils::Network::Response)>> _handleProjectileMap;
-            std::unordered_map<Utils::EnemyEnum, std::function<void(Utils::Network::Response)>> _handleEnemyMap;
             void initSignalHandlers();
 
             boost::asio::io_service _ioService;
