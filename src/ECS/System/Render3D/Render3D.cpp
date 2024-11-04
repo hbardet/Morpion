@@ -14,13 +14,14 @@ void ECS::Systems::SystemRender3D::update(
     ECS::ComponentManager::SparseArray<ECS::Components::Render3D> &renders,
     std::vector<std::size_t> &entities,
     ECS::RessourcePool &ressourcePool,
-    raylib::Camera3D &camera)
+    raylib::Camera3D &camera,
+    std::vector<raylib::BoundingBox> &boundingBoxes)
 {
     raylib::Vector3 rotation = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 scale = {1.0f, 1.0f, 1.0f};
-    bool drawHitBox = false;
 
     camera.BeginMode();
+    DrawGrid(10, 1.0f);
     for (auto &entity : entities) {
         rotation = raylib::Vector3(0.0f, 0.0f, 0.0f);
         scale = raylib::Vector3(1.0f, 1.0f, 1.0f);
@@ -39,12 +40,15 @@ void ECS::Systems::SystemRender3D::update(
         auto &render = renders[entity].value();
         raylib::Vector3 pos(position.getX() , position.getZ(), position.getY());
         const std::string path = render.getPath();
+        if (path.empty())
+            continue;
 
-        if (drawHitBox) {
-            std::pair<float, float> TmpHitbox = ECS::Utils::getModelSize(ressourcePool.getModel(path));
-            DrawCubeWires(pos, TmpHitbox.first, 1.0f, TmpHitbox.second, RED);
-        }
         render.render(ressourcePool.getModel(path), pos, rotation, scale);
     }
+
+    for (const auto& box : boundingBoxes) {
+        box.Draw(RED);
+    }
+
     camera.EndMode();
 }
