@@ -31,7 +31,7 @@ void Rtype::Command::GameInfo::Games_available::execute_server_side()
 
     for (auto game: *_games) {
         if (game.second->isGameAvailable()) {
-    	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::GamesAvailable, game.second->getRoomId(), game.second->getPlayers()->size(), game.second->getNbMaxPlayers());
+    	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::GamesAvailable, game.second->getRoomId());
             sended |= true;
         }
     }

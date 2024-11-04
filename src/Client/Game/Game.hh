@@ -78,7 +78,7 @@ namespace Rtype {
         void setIsAvailableGames(bool state);
 
         std::vector<std::tuple<int, int, int>> getAvailableGames();
-        void addAvailableGames(int game_id, int nb_player, int nb_player_max);
+        void addAvailableGames(int game_id);
         void clearAvailableGames();
         void createPlayer(int id, float pos_x, float pos_y, int invincibility);
         void createOtherPlayer(int id, float pos_x, float pos_y);

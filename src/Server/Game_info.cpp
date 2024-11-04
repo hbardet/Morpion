@@ -13,12 +13,12 @@
 #include <vector>
 
 Rtype::Game_info::Game_info():
-	_id(-1), _level(0), _difficulty(1), _nbMaxPlayer(6), _nbProjectiles(100), _tick(0), _timeLastLevelEnded(0), _players(), _nextEnemyIndex(0), _toSetNetwork(true)
+	_id(-1), _level(0), _nbProjectiles(100), _tick(0), _timeLastLevelEnded(0), _players(), _nextEnemyIndex(0), _toSetNetwork(true)
 {
 }
 
-Rtype::Game_info::Game_info(int id, int difficulty, int nbMaxPlayer):
-	_id(id), _level(0), _difficulty(difficulty), _nbMaxPlayer(nbMaxPlayer), _nbProjectiles(100), _tick(0), _timeLastLevelEnded(0), _players(), _nextEnemyIndex(0), _toSetNetwork(true)
+Rtype::Game_info::Game_info(int id):
+	_id(id), _level(0), _nbProjectiles(100), _tick(0), _timeLastLevelEnded(0), _players(), _nextEnemyIndex(0), _toSetNetwork(true)
 {
     _loadData.LoadDataFromFile("stage1.json");
     _enemySpawnData = _loadData.GetEnemySpawnData();
@@ -36,17 +36,15 @@ Rtype::Game_info::~Game_info()
 }
 
 Rtype::Game_info::Game_info(Game_info &&other) noexcept:
-	_id(other._id), _level(other._level), _difficulty(other._difficulty), _nbMaxPlayer(other._nbMaxPlayer), _tick(other._tick),
+	_id(other._id), _level(other._level), _tick(other._tick),
     _timeLastLevelEnded(other._timeLastLevelEnded), _tickThread(std::move(other._tickThread)), _players(std::move(other._players)), _toSetNetwork(other._toSetNetwork)
 {
     other._id = -1;
     other._level = 0;
-    other._nbMaxPlayer = 6;
     other._nbProjectiles = 100;
     other._tick = 0;
     other._timeLastLevelEnded = 0;
     other._nextEnemyIndex = 0;
-    other._difficulty = 0;
 }
 
 Rtype::Game_info &Rtype::Game_info::operator=(Game_info &&other) noexcept
@@ -58,19 +56,16 @@ Rtype::Game_info &Rtype::Game_info::operator=(Game_info &&other) noexcept
 
         _id = other._id;
         _level = other._level;
-        _nbMaxPlayer = other._nbMaxPlayer;
         _tick = other._tick;
         _tickThread = std::move(other._tickThread);
         _players = std::move(other._players);
 		_toSetNetwork = other._toSetNetwork;
         _nbProjectiles = other._nbProjectiles;
         _nextEnemyIndex = other._nextEnemyIndex;
-        _difficulty = other._difficulty;
         _timeLastLevelEnded = other._timeLastLevelEnded;
 
         other._id = -1;
         other._level = 0;
-        other._nbMaxPlayer = 6;
         other._tick = 0;
     }
     return *this;
@@ -132,7 +127,7 @@ void Rtype::Game_info::computeTick(void)
 bool Rtype::Game_info::isGameAvailable(void)
 {
     std::lock_guard<std::mutex> lock(_playersMutex);
-	return !(_players->max_size() == _nbMaxPlayer);
+	return !(_players->max_size() == 2);
 }
 
 bool Rtype::Game_info::gameStatus(void)
@@ -197,7 +192,7 @@ void Rtype::Game_info::disconnectPlayer(int id)
 
 int Rtype::Game_info::getNbMaxPlayers()
 {
-    return _nbMaxPlayer;
+    return 2;
 }
 
 int Rtype::Game_info::getNbProjectiles()

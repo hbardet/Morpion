@@ -33,52 +33,13 @@ namespace Utils
         CreateGame,
         JoinGame,
         GameWonLost,
-        SafetyCheck,
-        LevelComplete,
         ClientDisconnect,
         MissingPackages
     };
 
     // Enums for player-related functions.
     enum class PlayerEnum: uint8_t {
-        PlayerSpawnOnGame = 0,
-        PlayerDie,
-        PlayerMove,
-        Position,
-        PlayerAttack,
-        PlayerGotPowerUp,
-        PlayerHitAWall,
-        PlayerScore
-    };
-
-    // Enums for enemy-related functions.
-    enum class EnemyEnum: uint8_t {
-        EnemySpawn = 0,
-        EnemyDie,
-        EnemyMove,
-        EnemyAttack,
-        EnemyDestroy,
-        EnemyDamage
-    };
-
-    // Enums for boss-related functions.
-    enum class BossEnum: uint8_t {
-        BossSpawn = 0,
-        BossDie,
-        BossAttack
-    };
-
-    // Enums for power-up-related functions.
-    enum class PowerUpEnum: uint8_t {
-        PowerUpSpawn = 0,
-        PowerUpDisappear,
-        PowerUpAttack
-    };
-
-    // Enums for projectile-related functions.
-    enum class ProjectileEnum: uint8_t {
-        ProjectileFired = 0,
-        ProjectileHit
+        PlayerAttack = 0
     };
 
     /**
@@ -87,17 +48,11 @@ namespace Utils
      * This concept ensures that the template parameter T can only be one of the following types:
      * - GameInfoEnum
      * - PlayerEnum
-     * - EnemyEnum
-     * - BossEnum
-     * - PowerUpEnum
-     * - ProjectileEnum
      *
      * Any type that does not match one of these enumerations will not satisfy this concept.
      */
     template <typename T>
-    concept FunctionIndex = std::is_same_v<T, GameInfoEnum> || std::is_same_v<T, PlayerEnum> ||
-                        std::is_same_v<T, EnemyEnum> || std::is_same_v<T, BossEnum> ||
-                        std::is_same_v<T, PowerUpEnum> || std::is_same_v<T, ProjectileEnum>;
+    concept FunctionIndex = std::is_same_v<T, GameInfoEnum> || std::is_same_v<T, PlayerEnum>;
 
 
     using PrimitiveType = std::variant<uint32_t, bool, char, int, double>;
@@ -117,37 +72,14 @@ namespace Utils
                     return;
                 _parametersMap = {
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::NewClientConnected)}, {"", "i"}},
-                    {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::GamesAvailable)}, {"", "iii"}},
-                    {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::CreateGame)}, {"ii", "i"}},
+                    {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::GamesAvailable)}, {"", "i"}},
+                    {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::CreateGame)}, {"", "i"}},
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::JoinGame)}, {"i", "bii"}},
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::GameWonLost)}, {"", "b"}},
-                    {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::SafetyCheck)}, {"", ""}},
-                    {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::LevelComplete)}, {"", "i"}},
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::ClientDisconnect)}, {"", "i"}},
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::MissingPackages)}, {"llll", ""}},
 
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerSpawnOnGame)}, {"", "iff"}},
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerDie)}, {"", "i"}},
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerMove)}, {"ff", "iff"}},
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::Position)}, {"", "iff"}},
                     {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerAttack)}, {"i", "ii"}},
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerGotPowerUp)}, {"i", "ii"}},
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerHitAWall)}, {"", "i"}},
-                    {{InfoTypeEnum::Enemy, static_cast<uint8_t>(EnemyEnum::EnemyDie)}, {"", "i"}},
-                    {{InfoTypeEnum::Enemy, static_cast<uint8_t>(EnemyEnum::EnemyAttack)}, {"", "i"}},
-                    {{InfoTypeEnum::Enemy, static_cast<uint8_t>(EnemyEnum::EnemyDestroy)}, {"", "i"}},
-                    {{InfoTypeEnum::Enemy, static_cast<uint8_t>(EnemyEnum::EnemyDamage)}, {"i", "i"}},
-
-                    {{InfoTypeEnum::Boss, static_cast<uint8_t>(BossEnum::BossSpawn)}, {"", "iiffi"}},
-                    {{InfoTypeEnum::Boss, static_cast<uint8_t>(BossEnum::BossDie)}, {"", "i"}},
-                    {{InfoTypeEnum::Boss, static_cast<uint8_t>(BossEnum::BossAttack)}, {"", "ii"}},
-
-                    {{InfoTypeEnum::PowerUp, static_cast<uint8_t>(PowerUpEnum::PowerUpSpawn)}, {"ff", "iff"}},
-                    {{InfoTypeEnum::PowerUp, static_cast<uint8_t>(PowerUpEnum::PowerUpDisappear)}, {"", ""}},
-                    {{InfoTypeEnum::PowerUp, static_cast<uint8_t>(PowerUpEnum::PowerUpAttack)}, {"", ""}},
-
-                    {{InfoTypeEnum::Projectile, static_cast<uint8_t>(ProjectileEnum::ProjectileFired)}, {"", "ii"}},
-                    {{InfoTypeEnum::Projectile, static_cast<uint8_t>(ProjectileEnum::ProjectileHit)}, {"", "i"}},
                 };
             }
 

@@ -30,8 +30,8 @@ namespace Rtype
                     Create_game() = default;
                     ~Create_game();
 
-                    void set_client(int difficulty, int maxNbPlayer);
-                    void set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::Game_info>>> games, int difficulty, int maxNbPlayer);
+                    void set_client();
+                    void set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::Game_info>>> games);
 
                     void execute_client_side();
                     void execute_server_side();
@@ -40,8 +40,6 @@ namespace Rtype
                 private:
                     int getRoomIdAvailable(bool set_seed) const;
 
-                    int _difficulty;
-                    int _maxNbPlayer;
                     std::shared_ptr<std::map<int, std::shared_ptr<Rtype::Game_info>>> _games;
             };
         }

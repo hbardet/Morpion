@@ -128,10 +128,8 @@ void Rtype::udpServer::setHandleGameInfoMap() {
 
     _handleGameInfoMap[Utils::GameInfoEnum::CreateGame] = [this](Utils::Network::Response clientResponse) {
         std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
-        int difficulty = clientResponse.PopParam<int>();
-        int nbMaxPlayer = clientResponse.PopParam<int>();
 
-        cmd->set_server(_games, difficulty, nbMaxPlayer);
+        cmd->set_server(_games);
         cmd->setClientInfo(_clients->at(get_sender_client_id()));
         cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _clients->at(get_sender_client_id())->getAckToSend());
         _network->addCommandToInvoker(std::move(cmd));

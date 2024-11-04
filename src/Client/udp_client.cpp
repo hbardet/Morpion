@@ -146,8 +146,6 @@ void Rtype::udpClient::setHandleGameInfoMap()
 
     _handleGameInfoMap[Utils::GameInfoEnum::GamesAvailable] = [this](Utils::Network::Response response) {
         int codeRoom = response.PopParam<int>();
-        int nbPlayer = response.PopParam<int>();
-        int nbMaxPlayer = response.PopParam<int>();
         std::unique_ptr<Rtype::Command::GameInfo::Join_game> join_cmd ;
 
         if (codeRoom == -1) {
@@ -163,7 +161,7 @@ void Rtype::udpClient::setHandleGameInfoMap()
             _network->addCommandToInvoker(std::move(join_cmd));
         }
         if (_game->getIsAvailableGames()) {
-            _game->addAvailableGames(codeRoom, nbPlayer, nbMaxPlayer);
+            _game->addAvailableGames(codeRoom);
             _game->joinGame();
         }
     };

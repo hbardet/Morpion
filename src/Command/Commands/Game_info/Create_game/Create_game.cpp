@@ -7,17 +7,13 @@
 
 #include "Create_game.hh"
 
-void Rtype::Command::GameInfo::Create_game::set_client(int difficulty, int maxNbPlayer)
+void Rtype::Command::GameInfo::Create_game::set_client()
 {
-    _difficulty = difficulty;
-    _maxNbPlayer = maxNbPlayer;
 }
 
-void Rtype::Command::GameInfo::Create_game::set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::Game_info>>> games, int difficulty, int maxNbPlayer)
+void Rtype::Command::GameInfo::Create_game::set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::Game_info>>> games)
 {
     _games = games;
-    _difficulty = difficulty;
-    _maxNbPlayer = maxNbPlayer;
 }
 
 Rtype::Command::GameInfo::Create_game::~Create_game()
@@ -41,7 +37,7 @@ int Rtype::Command::GameInfo::Create_game::getRoomIdAvailable(bool set_seed) con
 
 void Rtype::Command::GameInfo::Create_game::execute_client_side()
 {
-	sendToEndpoint(Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame, _difficulty, _maxNbPlayer);
+	sendToEndpoint(Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
 }
 
 void Rtype::Command::GameInfo::Create_game::execute_server_side()
@@ -52,7 +48,7 @@ void Rtype::Command::GameInfo::Create_game::execute_server_side()
         CONSOLE_INFO("Impossible to create a game, no more room available.", "")
         return;
     }
-    _games->insert({room_id, std::make_shared<Game_info>(room_id, _difficulty, _maxNbPlayer)});
+    _games->insert({room_id, std::make_shared<Game_info>(room_id)});
     CONSOLE_INFO("Create a new game: ", room_id)
 	sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame, room_id);
 }

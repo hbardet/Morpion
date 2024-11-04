@@ -637,7 +637,7 @@ void Rtype::Game::initCreationGame(void)
             std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
 
             cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-            cmd->set_client(_selectedDifficulty + 1, _playerCount);
+            cmd->set_client();
             _network->addCommandToInvoker(std::move(cmd));
             CONSOLE_INFO("Create game: ", " Sended")
         }
@@ -1516,9 +1516,9 @@ std::vector<std::tuple<int, int, int>> Rtype::Game::getAvailableGames()
     return _availableGames;
 }
 
-void Rtype::Game::addAvailableGames(int game_id, int nb_player, int nb_player_max)
+void Rtype::Game::addAvailableGames(int game_id)
 {
-    _availableGames.push_back({game_id, nb_player, nb_player_max});
+    _availableGames.push_back({game_id, 1, 2});
 }
 
 void Rtype::Game::clearAvailableGames()
