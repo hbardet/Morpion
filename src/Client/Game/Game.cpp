@@ -19,36 +19,19 @@ std::vector<std::string> options = {"Start Game", "Options", "Quit"};
 
 Rtype::Game::Game(std::shared_ptr<Rtype::Network> network, bool render)
     : _network(network), _isRunning(true), _playerCount(2), _selectedDifficulty(1), _currentState(MENU),
-    _isJoiningGame(false), _isAvailableGames(false), _isRendering(render), _modelCreated(false), _isConnectedToServer(false)
+    _isJoiningGame(false), _isAvailableGames(false), _isRendering(render), _modelCreated(false), _isConnectedToServer(false), _vectorMorpion({-1,-1,-1,-1,-1,-1,-1,-1,-1}), _turnPlayer(false), _collision(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.f})
 {
     _core = std::make_unique<ECS::Core::Core>();
 
     if (render) {
         SetConfigFlags(FLAG_WINDOW_RESIZABLE);
         SetTargetFPS(60);
-        _window.Init(1280, 720, "R-Type Game");
+        _window.Init(1280, 720, "MorpionXOX");
         SetWindowMinSize(1280, 720);
-        _camera = raylib::Camera3D({ 0.0f, 10.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, 60.0f);
-        _ressourcePool.addModel("enemy_one");
-        _ressourcePool.addModel("turret");
-        _ressourcePool.addModel("boss_two_part");
-        _ressourcePool.addModel("bydo_shot");
-        _ressourcePool.addModel("ship_yellow");
-        _ressourcePool.addModel("boss_one");
-        _ressourcePool.addModel("player_shot");
-        _ressourcePool.addModel("boss_two");
-        _ressourcePool.addModel("patapata");
-        _ressourcePool.addModel("homing_shot");
-        _ressourcePool.addModel("bink");
+        _camera = raylib::Camera3D({ -5.0f, 5.0f, 0.0f}, {0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 60.0f);
         _ressourcePool.addModel("boss_one_part");
-        _ressourcePool.addModel("base_projectile");
-        _ressourcePool.addModel("player");
-        _ressourcePool.addModel("enemy_one");
+        _ressourcePool.addModel("patapata");
         _ressourcePool.addTexture("bg_menu");
-        _ressourcePool.addTexture("background");
-        _ressourcePool.addTexture("background_layer0");
-        _ressourcePool.addTexture("background_layer1");
-        _ressourcePool.addTexture("background_layer2");
     }
     _core->registerComponent<ECS::Components::Position>();
     _core->registerComponent<ECS::Components::Rotate>();
@@ -299,7 +282,7 @@ void Rtype::Game::setPlayerPos(int id, double x, double y)
 
 void Rtype::Game::createPlayer(int id, float pos_x, float pos_y, int invincibility)
 {
-    std::pair<float, float> TmpHitbox = ECS::Utils::getModelSize(_ressourcePool.getModel("ship_yellow"));
+    std::pair<float, float> TmpHitbox = ECS::Utils::getModelSize(_ressourcePool.getModel("boss_one_part"));
     std::size_t player = _core->createEntity();
 
     _core->addComponent(player, ECS::Components::Position{pos_x, pos_y});
@@ -310,7 +293,7 @@ void Rtype::Game::createPlayer(int id, float pos_x, float pos_y, int invincibili
     _core->addComponent(player, ECS::Components::Input{});
     _core->addComponent(player, ECS::Components::Health{5, -1// invincibility
         });
-    _core->addComponent(player, ECS::Components::Render3D{"ship_yellow"});
+    _core->addComponent(player, ECS::Components::Render3D{"boss_one_part"});
     _serverToLocalPlayersId[id] = player;
 
     std::size_t boss = _core->createEntity();
@@ -325,9 +308,9 @@ void Rtype::Game::createOtherPlayer(int id, float pos_x, float pos_y)
     std::size_t otherPlayer = _core->createEntity();
 
     if (_isRendering) {
-        std::pair<float, float> TmpHitbox = ECS::Utils::getModelSize(_ressourcePool.getModel("ship_yellow"));
+        std::pair<float, float> TmpHitbox = ECS::Utils::getModelSize(_ressourcePool.getModel("boss_one_part"));
         _core->addComponent(otherPlayer, ECS::Components::Hitbox{TmpHitbox.first, TmpHitbox.second});
-        _core->addComponent(otherPlayer, ECS::Components::Render3D{"ship_yellow"});
+        _core->addComponent(otherPlayer, ECS::Components::Render3D{"boss_one_part"});
     }
 
     _core->addComponent(otherPlayer, ECS::Components::Position{pos_x, pos_y});
@@ -614,33 +597,33 @@ void Rtype::Game::initCreationGame(void)
     _core->addComponent(createButtonEntity, ECS::Components::Position{400, 500});
     _core->addComponent(createButtonEntity, ECS::Components::Text{"Create Game", 30, RAYWHITE});
     _core->addComponent(createButtonEntity, ECS::Components::Button{Rectangle{350, 490, 300, 60}, true, [this]() {
-        if (!_isConnectedToServer) {
-            if (system("ls | grep -q r-type_server") == 0 && !_localServer.joinable()) {
-                _network->setSenderEndpoint(udp::endpoint(boost::asio::ip::make_address("127.0.0.1"), 2442)); //! Tmp get available port
-                int port = static_cast<int>(_network->getSenderEndpoint().port());
+        // if (!_isConnectedToServer) {
+        //     if (system("ls | grep -q r-type_server") == 0 && !_localServer.joinable()) {
+        //         _network->setSenderEndpoint(udp::endpoint(boost::asio::ip::make_address("127.0.0.1"), 2442)); //! Tmp get available port
+        //         int port = static_cast<int>(_network->getSenderEndpoint().port());
 
-                CONSOLE_INFO("A local server is now set.\nTo access to the server your local address is used (127.0.0.1) on the port ", port);
-                _localServer = std::thread([this, port]() {
-                    std::string cmd("./r-type_server " + std::to_string(port));
+        //         CONSOLE_INFO("A local server is now set.\nTo access to the server your local address is used (127.0.0.1) on the port ", port);
+        //         _localServer = std::thread([this, port]() {
+        //             std::string cmd("./r-type_server " + std::to_string(port));
 
-                    system(cmd.c_str());
-                });
+        //             system(cmd.c_str());
+        //         });
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                std::unique_ptr<Rtype::Command::GameInfo::Client_connection> cmd_connection = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Client_connection, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::NewClientConnected);
-                cmd_connection->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-                _network->addCommandToInvoker(std::move(cmd_connection));
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            }
-        }
-        if (_isConnectedToServer) {
-            std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
+        //         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //         std::unique_ptr<Rtype::Command::GameInfo::Client_connection> cmd_connection = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Client_connection, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::NewClientConnected);
+        //         cmd_connection->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+        //         _network->addCommandToInvoker(std::move(cmd_connection));
+        //         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //     }
+        // }
+        // if (_isConnectedToServer) {
+        //     std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
 
-            cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-            cmd->set_client();
-            _network->addCommandToInvoker(std::move(cmd));
-            CONSOLE_INFO("Create game: ", " Sended")
-        }
+        //     cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+        //     cmd->set_client(_selectedDifficulty + 1, _playerCount);
+        //     _network->addCommandToInvoker(std::move(cmd));
+        //     CONSOLE_INFO("Create game: ", " Sended")
+        // }
     }});
 
     std::size_t back = _core->createEntity();
@@ -662,7 +645,7 @@ void Rtype::Game::initPlayOption(void)
     _core->addComponent(createGame, ECS::Components::Position{400, 200});
     _core->addComponent(createGame, ECS::Components::Text{"Create Game", 30, RAYWHITE});
     _core->addComponent(createGame, ECS::Components::Button{Rectangle{350, 190, 300, 60}, true, [this]() {
-        initCreationGame();
+        initGame(1);
     }});
 
     std::size_t joinRandomGameEntity = _core->createEntity();
@@ -877,74 +860,25 @@ void Rtype::Game::createBoss2(int entityId, enemiesTypeEnum_t enemyType, float p
 
 void Rtype::Game::initGame(int id)
 {
-    stopMusic("menu");
     destroyEntityMenu();
     destroyEntityLayer();
-    destroyMusic();
-    playMusic("stage1");
-    createBackgroundLayers(2.f , "background_layer0", 3);
-    createBackgroundLayers(3.f , "background_layer1", 3);
-    createBackgroundLayers(5.f , "background_layer2", 3);
-    createPlayer(id, -10.0f, 0.0f, 50);
 
     switchState(GameState::PLAY);
-
-    // createPlayer(0, -10.0f, 0.0f, 50);
-    // createOtherPlayer(1, -10.0f, 0.0f);
-
-    // createBoss1();
-
-    // createBoss1Tail(BOSS1_Tail0, 6.0f, 3.0f);
-    // createBoss1Tail(BOSS1_Tail1, 6.1f, 2.7f);
-    // createBoss1Tail(BOSS1_Tail2, 5.8f, 2.4f);
-    // createBoss1Tail(BOSS1_Tail3, 6.2f, 2.1f);
-    // createBoss1Tail(BOSS1_Tail4, 6.0f, 1.8f);
-    // createBoss1Tail(BOSS1_Tail5, 6.1f, 1.5f);
-    // createBoss1Tail(BOSS1_Tail6, 5.9f, 1.2f);
-    // createBoss1Tail(BOSS1_Tail7, 5.8f, 0.9f);
-    // createBoss1Tail(BOSS1_Tail8, 6.1f, 0.6f);
-    // createBoss1Tail(BOSS1_Tail9, 6.0f, 0.3f);
-    // createBoss1Tail(BOSS1_Tail10, 6.2f, 0.0f);
-    // createBoss1Tail(BOSS1_Tail11, 5.9f, -0.3f);
-    // createBoss1Tail(BOSS1_Tail12, 5.7f, -0.6f);
-    // createBoss1Tail(BOSS1_Tail13, 6.0f, -0.9f);
-    // createBoss1Tail(BOSS1_Tail14, 6.1f, -1.2f);
-    // createBoss1Tail(BOSS1_Tail15, 5.9f, -1.5f);
-    // createBoss1Tail(BOSS1_Tail16, 5.7f, -1.8f);
-    // createBoss1Tail(BOSS1_Tail17, 6.0f, -2.1f);
-    // createBoss1Tail(BOSS1_Tail18, 5.9f, -2.4f);
-    // createBoss1Tail(BOSS1_Tail19, 6.2f, -2.7f);
-
-    //ay = ((by - cy) / 2) * sin((π / (bx - cx)) * (ax - ((bx + cx) / 2))) + ((by + cy) / 2)
-
-    // createEnemy(PATAPATA, 15.5f, -3.0f, 1);
-    // createEnemy(PATAPATA, 16.5f, -2.9f, 1);
-    // createEnemy(PATAPATA, 17.5f, -2.8f, 1);
-    // createEnemy(PATAPATA, 18.5f, -3.0f, 1);
-    // createEnemy(PATAPATA, 19.5f, -3.2f, 1);
-
-    // createEnemy(PATAPATA, 15.5f, 3.0f, 1);
-    // createEnemy(PATAPATA, 16.5f, 2.9f, 1);
-    // createEnemy(PATAPATA, 17.5f, 2.8f, 1);
-    // createEnemy(PATAPATA, 18.5f, 3.2f, 1);
-    // createEnemy(PATAPATA, 19.5f, 2.0f, 1);
-
-    // createEnemy(BUG, 15.5f, 0.25f, 1);
-    // createEnemy(BUG, 16.25f, 0.25f, 1);
-    // createEnemy(BUG, 17.0f, 0.25f, 1);
-    // createEnemy(BUG, 17.75f, 0.25f, 1);
-    // createEnemy(BUG, 18.5f, 0.25f, 1);
-    // createEnemy(BUG, 19.25f, 0.25f, 1);
-
-
-    // createEnemy(BUG, 15.5f, 3.25f, 1);
-    // createEnemy(BUG, 16.25f, 3.25f, 1);
-    // createEnemy(BUG, 17.0f, 3.25f, 1);
-    // createEnemy(BUG, 17.75f, 3.25f, 1);
-    // createEnemy(BUG, 18.5f, 3.25f, 1);
-    // createEnemy(BUG, 19.25f, 3.25f, 1);
-
-    // createEnemy(MINIKIT, 17.0f, -4.0f);
+    for (float y = -1; y < 2; y++){
+        for (float x = -1; x < 2; x++) {
+            std::size_t entity = _core->createEntity();
+            _core->addComponent(entity, ECS::Components::Position{x * 1.5f, y * 1.5f});
+            _core->addComponent(entity, ECS::Components::Rotate{-90.0f, 45.0f, 0.0f});
+            _core->addComponent(entity, ECS::Components::Scale{2.0f});
+            _core->addComponent(entity, ECS::Components::Render3D{""});
+            _vecIdMorpion.push_back(entity);
+            raylib::BoundingBox box = {
+                Vector3{x * 1.5f - 0.5f, -0.5f, y * 1.5f - 0.5f},
+                Vector3{x * 1.5f + 0.5f, 0.5f, y * 1.5f + 0.5f}
+            };
+            _vecBoxMorpion.push_back(box);
+        }
+    }
 }
 
 void Rtype::Game::run()
@@ -962,7 +896,7 @@ void Rtype::Game::run()
                 break;
             case PLAY:
                 // updateMusic("stage1");
-                update();
+                updateMorpion();
                 render();
                 break;
         }
@@ -1204,6 +1138,41 @@ void Rtype::Game::sendPods(std::size_t podId)
             serverPodId = pod.first;
 
     std::cout << "podServerId: " << serverPodId << std::endl;
+}
+
+void Rtype::Game::updateMorpion()
+{
+    int index = 0;
+
+    for (auto &entity : _vecIdMorpion){
+        auto &caseGame = _core->getComponent<ECS::Components::Render3D>(entity);
+
+        switch (_vectorMorpion[index]) {
+            case 0 :
+                caseGame.setPath("patapata");
+                break;
+            case 1 :
+                caseGame.setPath("boss_one_part");
+                break;
+            default:
+                caseGame.setPath("");
+       }
+       index++;
+    }
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        _ray = raylib::Ray(raylib::Mouse::GetPosition(), _camera);
+
+        for (int i = 0; i < _vecBoxMorpion.size(); i++) {
+            raylib::RayCollision tmpCollision(_ray, _vecBoxMorpion[i]);
+            if (tmpCollision.GetHit()) {
+                _collision = tmpCollision;
+                if (_turnPlayer)
+                    placeMorpion(_idPlayer, i);
+                break;
+            }
+        }
+    }
+    _camera.Update(CAMERA_ORBITAL);
 }
 
 void Rtype::Game::update() {
@@ -1518,7 +1487,7 @@ std::vector<std::tuple<int, int, int>> Rtype::Game::getAvailableGames()
 
 void Rtype::Game::addAvailableGames(int game_id)
 {
-    _availableGames.push_back({game_id, 1, 2});
+    _availableGames.push_back({game_id , 1, 2});
 }
 
 void Rtype::Game::clearAvailableGames()
@@ -1584,6 +1553,13 @@ void Rtype::Game::renderMenu() {
     EndDrawing();
 }
 
+void Rtype::Game::placeMorpion(int idPlayer, int pos)
+{
+    if (pos < 9 && _vectorMorpion[pos] == -1)
+        _vectorMorpion[pos] = idPlayer;
+    _turnPlayer = !_turnPlayer;
+}
+
 void Rtype::Game::render() {
     BeginDrawing();
     _window.ClearBackground(RAYWHITE);
@@ -1606,13 +1582,20 @@ void Rtype::Game::render() {
                            _ressourcePool);
 
     DrawFPS(100, 100);
+    std::vector<raylib::BoundingBox> tmp;
+    for (size_t i = 0; i < _vectorMorpion.size(); i++) {
+        if (_vectorMorpion[i] == -1) {
+            tmp.push_back(_vecBoxMorpion[i]);
+        }
+    }
     renderSystem3D->update(_core->getComponents<ECS::Components::Position>(),
                            _core->getComponents<ECS::Components::Rotate>(),
                            _core->getComponents<ECS::Components::Scale>(),
                            _core->getComponents<ECS::Components::Render3D>(),
                            renderEntities3D,
                            _ressourcePool,
-                           _camera);
+                           _camera,
+                           tmp);
 
 
     EndDrawing();

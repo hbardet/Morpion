@@ -37,6 +37,11 @@ void ECS::Components::Render3D::render(raylib::Model &model, raylib::Vector3 pos
     model.Draw(position, scale.x, _color);
 }
 
+void ECS::Components::Render3D::setPath(const std::string& path)
+{
+    _path = path;
+}
+
 const raylib::Color& ECS::Components::Render3D::getColor() const
 {
     return _color;

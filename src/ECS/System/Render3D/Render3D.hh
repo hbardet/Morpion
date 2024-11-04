@@ -58,7 +58,8 @@ namespace ECS {
                         ECS::ComponentManager::SparseArray<ECS::Components::Render3D> &renders,
                         std::vector<std::size_t> &entities,
                         ECS::RessourcePool &ressourcePool,
-                        raylib::Camera3D &camera);
+                        raylib::Camera3D &camera,
+                        std::vector<raylib::BoundingBox> &boundingBoxes);
         };
     }
 }

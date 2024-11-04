@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#if defined(_WIN32)           
+#if defined(_WIN32)
 	#define NOGDI
 	#define NOUSER
 #endif
@@ -23,6 +23,7 @@ namespace ECS {
             ~Render3D() = default;
 
             void render(raylib::Model &model, raylib::Vector3 position, raylib::Vector3 rotation, raylib::Vector3 scale);
+            void setPath(const std::string &path);
             const raylib::Color &getColor() const;
             void setColor(const raylib::Color &color);
             const std::string getPath() const;

@@ -51,6 +51,7 @@
 
 #include <cstdlib>
 #include <thread>
+#include <vector>
 
 #define CONVERT_ACMD_TO_CMD(TYPE, CMD_CATEGORY, CMD_INDEX)  _network->convertACommandToCommand<TYPE>(_network->createCommand(static_cast<uint8_t>(CMD_CATEGORY), static_cast<uint8_t>(CMD_INDEX)))
 
@@ -96,6 +97,7 @@ namespace Rtype {
         void setIsConnectedToServer(bool state);
         void setIsRunning(bool state);
         void equipPod(int playerId, int podId);
+        void placeMorpion(int idPlayer, int pos);
 
         std::vector<int> getAIProjectile();
         std::vector<int> getDamagedEntities();
@@ -111,6 +113,7 @@ namespace Rtype {
         void createBackgroundLayers(float speed, std::string modelPath, int numberOfPanel);
         void update();
         void updateMenu();
+        void updateMorpion();
         void render();
         void renderMenu();
         void switchState(GameState newState);
@@ -170,5 +173,13 @@ namespace Rtype {
         std::vector<std::size_t> _deadEntities;
         std::vector<std::size_t> _damagedEntities;
         std::thread _localServer;
+        std::vector<int> _vectorMorpion;
+        bool _turnPlayer;
+        int _idPlayer;
+        std::vector <std::size_t> _vecIdMorpion;
+        std::vector <raylib::BoundingBox> _vecBoxMorpion;
+
+        raylib::Ray _ray;
+        raylib::RayCollision _collision;
     };
 };
