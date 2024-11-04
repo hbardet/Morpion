@@ -1,0 +1,1072 @@
+{
+  "PataPata0_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 12
+  },
+  "PataPata0_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.5,
+      "y": -2.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 12
+  },
+  "PataPata0_2": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12.5,
+      "y": -2.8
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 12
+  },
+  "PataPata0_3": {
+    "type": "PATAPATA",
+    "difficulty": 2,
+    "position": {
+      "x": 13.5,
+      "y": -3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 12
+  },
+  "PataPata0_4": {
+    "type": "PATAPATA",
+    "difficulty": 3,
+    "position": {
+      "x": 14.5,
+      "y": -3.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 12
+  },
+  "PataPata1_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 14
+  },
+  "PataPata1_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.5,
+      "y": 2.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 14
+  },
+  "PataPata1_2": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12.5,
+      "y": 2.8
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 14
+  },
+  "PataPata1_3": {
+    "type": "PATAPATA",
+    "difficulty": 2,
+    "position": {
+      "x": 13.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 14
+  },
+  "PataPata1_4": {
+    "type": "PATAPATA",
+    "difficulty": 3,
+    "position": {
+      "x": 14.5,
+      "y": 3.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 14
+  },
+  "Bug0_0": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 16
+  },
+  "Bug0_1": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 16
+  },
+  "Bug0_2": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 12.0,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 16
+  },
+  "Bug0_3": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 12.75,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 16
+  },
+  "Bug0_4": {
+    "type": "BUG",
+    "difficulty": 2,
+    "position": {
+      "x": 13.5,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 16
+  },
+  "Bug0_5": {
+    "type": "BUG",
+    "difficulty": 3,
+    "position": {
+      "x": 14.25,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 16
+  },
+  "Minikit0": {
+    "type": "MINIKIT",
+    "difficulty": 1,
+    "position": {
+      "x": 11.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enmy_one",
+    "time minute": 0,
+    "time second": 17
+  },
+  "Bink0": {
+    "type": "BINK",
+    "difficulty": 2,
+    "position": {
+      "x": 11.0,
+      "y": 0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 17
+  },
+  "Bug1_0": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 3.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 19
+  },
+  "Bug1_1": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 3.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 19
+  },
+  "Bug1_2": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 12.0,
+      "y": 3.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 19
+  },
+  "Bug1_3": {
+    "type": "BUG",
+    "difficulty": 1,
+    "position": {
+      "x": 12.75,
+      "y": 3.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 19
+  },
+  "Bug1_4": {
+    "type": "BUG",
+    "difficulty": 2,
+    "position": {
+      "x": 13.5,
+      "y": 3.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 19
+  },
+  "Bug1_5": {
+    "type": "BUG",
+    "difficulty": 3,
+    "position": {
+      "x": 14.25,
+      "y": 3.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 19
+  },
+  "Patapata2_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -1.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 21
+  },
+  "Patapata2_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.5,
+      "y": 0.25
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 21
+  },
+  "Patapata2_2": {
+    "type": "PATAPATA",
+    "difficulty": 2,
+    "position": {
+      "x": 12.5,
+      "y": -0.5
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 21
+  },
+  "Patapata2_3": {
+    "type": "PATAPATA",
+    "difficulty": 3,
+    "position": {
+      "x": 13.5,
+      "y": 0.75
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 21
+  },
+  "Minikit_1": {
+    "type": "MINIKIT",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 2
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 22
+  },
+  "PataPata3_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -1.5
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 23
+  },
+  "PataPata3_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 0.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 23
+  },
+  "PataPata3_2": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": -0.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 23
+  },
+  "PataPata3_3": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 1.5
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 24
+  },
+  "PataPata3_4": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 0.6
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 24
+  },
+  "PataPata3_5": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": -1.7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 24
+  },
+  "PataPata3_6": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -0.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 25
+  },
+  "PataPata3_7": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": -0.7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 25
+  },
+  "PataPata3_8": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": 0.6
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 25
+  },
+  "PataPata3_9": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -1.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 26
+  },
+  "PataPata3_10": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 1.5
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 26
+  },
+  "PataPata3_11": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": 1.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 26
+  },
+  "PataPata3_12": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -1.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 27
+  },
+  "Minikit_2": {
+    "type": "MINIKIT",
+    "difficulty": 1,
+    "position": {
+      "x": 13.5,
+      "y": -2
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 27
+  },
+  "PataPata3_13": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": -1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 27
+  },
+  "PataPata3_14": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": 0.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 27
+  },
+  "PataPata3_15": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 2.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 28
+  },
+  "PataPata3_16": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 0.7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 28
+  },
+  "PataPata3_17": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": -0.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 28
+  },
+  "PataPata3_18": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 1.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 29
+  },
+  "PataPata3_19": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": -0.7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 29
+  },
+  "PataPata3_20": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12,
+      "y": -1.5
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 29
+  },
+  "Bink1": {
+    "type": "BINK",
+    "difficulty": 1,
+    "position": {
+      "x": 10.25,
+      "y": 3
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 31
+  },
+  "PataPata4_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 1.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 32
+  },
+  "PataPata4_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": 1.3
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 32
+  },
+  "PataPata5_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -1.5
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 34
+  },
+  "PataPata5_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.25,
+      "y": -1.7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 34
+  },
+  "Bink2": {
+    "type": "BINK",
+    "difficulty": 1,
+    "position": {
+      "x": 10.25,
+      "y": 3
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 36
+  },
+  "Bink3": {
+    "type": "BINK",
+    "difficulty": 1,
+    "position": {
+      "x": -10.25,
+      "y": 3
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 37
+  },
+  "Blaster0_0": {
+    "type": "BLASTER",
+    "difficulty": 3,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 37
+  },
+  "Blaster0_1": {
+    "type": "BLASTER",
+    "difficulty": 2,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 38
+  },
+  "Blaster0_2": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "Blaster0_3": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 40
+  },
+
+  "PataPata6_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "PataPata6_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.5,
+      "y": 2.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "PataPata6_2": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12.5,
+      "y": 2.8
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "PataPata6_3": {
+    "type": "PATAPATA",
+    "difficulty": 2,
+    "position": {
+      "x": 13.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "PataPata6_4": {
+    "type": "PATAPATA",
+    "difficulty": 3,
+    "position": {
+      "x": 14.5,
+      "y": 3.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "Blaster0_4": {
+    "type": "BLASTER",
+    "difficulty": 3,
+    "position": {
+      "x": 10.5,
+      "y": 4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 37
+  },
+  "Blaster0_5": {
+    "type": "BLASTER",
+    "difficulty": 2,
+    "position": {
+      "x": 10.5,
+      "y": 4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 38
+  },
+  "Blaster0_6": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 39
+  },
+  "Blaster0_7": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 40
+  },
+  "Minikit_4": {
+    "type": "MINIKIT",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 2
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 40
+  },
+  "Bink4": {
+    "type": "BINK",
+    "difficulty": 1,
+    "position": {
+      "x": 9.5,
+      "y": -7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 41
+  },
+  "Bink5": {
+    "type": "BINK",
+    "difficulty": 1,
+    "position": {
+      "x": -9.5,
+      "y": -7
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 42
+  },
+  "PataPata7_0": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 43
+  },
+  "PataPata7_1": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 11.5,
+      "y": 2.9
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 43
+  },
+  "PataPata7_2": {
+    "type": "PATAPATA",
+    "difficulty": 1,
+    "position": {
+      "x": 12.5,
+      "y": 2.8
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 43
+  },
+  "PataPata7_3": {
+    "type": "PATAPATA",
+    "difficulty": 2,
+    "position": {
+      "x": 13.5,
+      "y": 3.0
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 43
+  },
+  "PataPata7_4": {
+    "type": "PATAPATA",
+    "difficulty": 3,
+    "position": {
+      "x": 14.5,
+      "y": 3.1
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 43
+  },
+  "Blaster1_0": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 43
+  },
+  "Blaster1_1": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 44
+  },
+  "Blaster1_2": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 45
+  },
+  "Blaster1_3": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 46
+  },
+  "Blaster1_4": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 47
+  },
+  "Minikit_5": {
+    "type": "MINIKIT",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -2
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 47
+  },
+  "Blaster1_5": {
+    "type": "BLASTER",
+    "difficulty": 1,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 48
+  },
+  "Blaster1_6": {
+    "type": "BLASTER",
+    "difficulty": 2,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 49
+  },
+  "Blaster1_7": {
+    "type": "BLASTER",
+    "difficulty": 3,
+    "position": {
+      "x": 10.5,
+      "y": -4.67
+    },
+    "health": 1,
+    "model": "enemy_one",
+    "time minute": 0,
+    "time second": 50
+  },
+
+  "BOSS1_Core": {
+    "type": "BOSS1_core",
+    "difficulty": 1,
+    "position": {
+      "x": 8,
+      "y": 2.0
+    },
+    "health": 20,
+    "model": "boss1_core",
+    "time minute": 1,
+    "time second": 0
+  }
+}

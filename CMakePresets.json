@@ -1,0 +1,51 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "linux-gcc",
+      "description": "Configuration for Linux using g++",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "windows",
+      "description": "Configuration for Windows using Visual Studio 17 2022",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}\\build\\windows",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-gcc",
+      "configurePreset": "linux-gcc"
+    },
+    {
+      "name": "windows",
+      "configurePreset": "windows"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "linux-gcc",
+      "configurePreset": "linux-gcc"
+    },
+    {
+      "name": "windows",
+      "configurePreset": "windows"
+    }
+  ]
+}

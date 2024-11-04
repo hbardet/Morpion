@@ -1,0 +1,71 @@
+# Doxyfile 1.9.1
+
+# Project settings
+PROJECT_NAME           = "ECS Project"
+PROJECT_NUMBER         = "1.0"
+PROJECT_BRIEF          = "Documentation for the ECS project"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = src/
+RECURSIVE              = YES
+
+# File pattern settings
+FILE_PATTERNS          = *.cpp *.hpp *.hh
+EXCLUDE_PATTERNS       = */CMakeLists.txt
+
+# Build settings
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = NO
+
+# Document settings
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+OPTIMIZE_FOR_FORTRAN   = NO
+OPTIMIZE_OUTPUT_VHDL   = NO
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = NO
+
+# Source Browser settings
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+STRIP_CODE_COMMENTS    = NO
+
+# HTML output settings
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_COLORSTYLE_HUE    = 220
+
+# LaTeX output settings
+GENERATE_LATEX         = NO
+
+# XML output settings
+GENERATE_XML           = NO
+
+# Man page output settings
+GENERATE_MAN           = NO
+
+# Dot settings
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 4
+CLASS_DIAGRAMS         = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_IMAGE_FORMAT       = png
+
+# Input filtering settings
+INPUT_FILTER           = ""
+FILTER_PATTERNS        = ""
+
+# Warnings and messages
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+
+# Additional settings
+QUIET                  = NO
+WARN_LOGFILE           = warnings.log

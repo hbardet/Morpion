@@ -1,0 +1,22 @@
+# Blender 4.2.1 LTS MTL File: 'ship_yellow.blend'
+# www.blender.org
+
+newmtl ModulexBlack
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+Pr 0.400000
+Pm 0.000000
+
+newmtl Vintage_Yellow
+Kd 0.896264 0.545725 0.001518
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+Pr 0.400000
+Pm 0.000000

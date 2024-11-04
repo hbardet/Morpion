@@ -1,0 +1,14 @@
+{
+    "name": "mon-projet",
+    "version-string": "0.1.0",
+    "builtin-baseline": "98aa6396292d57e737a6ef999d4225ca488859d5",
+    "dependencies": [
+        {
+            "name": "boost-asio",
+            "version>=": "1.82.0"
+        },
+        "doctest",
+        "raylib",
+        "jsoncpp"
+    ]
+}
