@@ -982,48 +982,6 @@ void Rtype::Game::runServer()
         }
 }
 
-void Rtype::Game::sendProjectile()
-{
-    std::unique_ptr<Rtype::Command::Projectile::Fired> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Projectile::Fired, Utils::InfoTypeEnum::Projectile, Utils::ProjectileEnum::ProjectileFired);
-
-    cmd->set_client();
-    cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-    _network->addCommandToInvoker(std::move(cmd));
-}
-
-void Rtype::Game::sendInput(std::vector<std::size_t> vec)
-{
-    std::unique_ptr<Rtype::Command::Player::Move> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Move, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerMove);
-    double x = 0.;
-    double y = 0.;
-
-    if (vec.empty())
-        return;
-    for (auto input: vec) {
-        switch (input) {
-        case 1:
-            x += 0.1;
-            break;
-        case 2:
-            y -= 0.1;
-            break;
-        case 3:
-            x -= 0.1;
-            break;
-        case 4:
-            y += 0.1;
-            break;
-        case 5:
-            sendProjectile();
-            break;
-        }
-    }
-    if (x != 0 || y != 0) {
-        cmd->set_client(x, y);
-        cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-        _network->addCommandToInvoker(std::move(cmd));
-    }
-}
 
 std::vector<std::size_t> Rtype::Game::getAllInputs() {
     std::vector<std::size_t> vec;
@@ -1196,12 +1154,6 @@ void Rtype::Game::destroyEntity(int entityId)
     }
     if (_serverToLocalEnemiesId.find(entityId) != _serverToLocalEnemiesId.end()) {
         if (_core->getComponents<ECS::Components::AI>()[_serverToLocalEnemiesId.at(entityId)]->getEnemyType() == MINIKIT && _isRendering) {
-            std::unique_ptr<Rtype::Command::PowerUp::Spawn> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::PowerUp::Spawn, Utils::InfoTypeEnum::PowerUp, Utils::PowerUpEnum::PowerUpSpawn);
-            cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-            float x = _core->getComponents<ECS::Components::Position>()[_serverToLocalEnemiesId.at(entityId)]->getX();
-            float y = _core->getComponents<ECS::Components::Position>()[_serverToLocalEnemiesId.at(entityId)]->getY();
-            cmd->set_client(x, y);
-            _network->addCommandToInvoker(std::move(cmd));
         }
         toDestroy = _serverToLocalEnemiesId.at(entityId);
         _serverToLocalEnemiesId.erase(entityId);
@@ -1252,10 +1204,6 @@ void Rtype::Game::sendPods(std::size_t podId)
             serverPodId = pod.first;
 
     std::cout << "podServerId: " << serverPodId << std::endl;
-    std::unique_ptr<Rtype::Command::Player::Power_up> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Power_up, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerGotPowerUp);
-    cmd->set_client(serverPodId);
-    cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-    _network->addCommandToInvoker(std::move(cmd));
 }
 
 void Rtype::Game::update() {
@@ -1288,7 +1236,6 @@ void Rtype::Game::update() {
                              AIEntities, _serverToLocalPlayersId);
 
     std::vector<std::size_t> inputs = getAllInputs();
-    sendInput(inputs);
     inputUpdatesSystem->updateInputs(inputs,
                         _core->getComponents<ECS::Components::Input>(),
                         inputEntities);
@@ -1344,14 +1291,6 @@ void Rtype::Game::update() {
                 if (damageableEntities[j] == _damagedEntities[i] && healthComponents[damageableEntities[j]]->getInvincibility() == 0) {
                     // _damagedEntities.push_back(damageableEntities[j]);
                     // for (std::size_t i; i < serverDamagedEntities.size(); i++)
-                    std::unique_ptr<Rtype::Command::Enemy::Damage> damage_cmd =
-                        CONVERT_ACMD_TO_CMD(Rtype::Command::Enemy::Damage, Utils::InfoTypeEnum::Enemy, Utils::EnemyEnum::EnemyDamage);
-                    for (const auto& Ids : _serverToLocalEnemiesId)
-                        if (Ids.second == damageableEntities[j]) {
-                            damage_cmd->set_client(Ids.first);
-                        }
-                    damage_cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-                    _network->addCommandToInvoker(std::move(damage_cmd));
                 }
             }
             for (int j = 0; j < projectileEntities.size(); j++)
