@@ -182,17 +182,12 @@ void Rtype::udpClient::setHandleGameInfoMap()
 
     _handleGameInfoMap[Utils::GameInfoEnum::JoinGame] = [this](Utils::Network::Response response) {
         bool accepted = response.PopParam<bool>();
-        int level = response.PopParam<int>();
-        int entityNb = response.PopParam<int>();
 
         if (!accepted) {
             _game->failToConnect();
             return;
         }
-        CONSOLE_INFO("Joining game at level: ", level)
         _game->initGame(_id);
-        CONSOLE_INFO("Destroy min is ", entityNb)
-        _destroyMin = entityNb;
     };
 
     _handleGameInfoMap[Utils::GameInfoEnum::GameWonLost] = [this](Utils::Network::Response response) {
@@ -227,8 +222,14 @@ void Rtype::udpClient::setHandleGameInfoMap()
 void Rtype::udpClient::setHandlePlayerMap()
 {
     _handlePlayerMap[Utils::PlayerEnum::SetPawn] = [this](Utils::Network::Response response) {
-        std::unique_ptr<Rtype::Command::Player::SetPawn> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::SetPawn, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::SetPawn);
+        int pos = response.PopParam<int>();
+        int playerId = response.PopParam<int>();
 
+        // std::unique_ptr<Rtype::Command::Player::SetPawn> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::SetPawn, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::SetPawn);
+        // cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+        // cmd->set_client(0); //! Index to adapt 0-8
+        // _network->addCommandToInvoker(std::move(cmd));
+        _game->placeMorpion(playerId, pos);
     };
 }
 

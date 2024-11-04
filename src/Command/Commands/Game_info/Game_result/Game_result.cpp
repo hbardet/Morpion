@@ -27,6 +27,6 @@ void Rtype::Command::GameInfo::Game_result::execute_client_side()
 
 void Rtype::Command::GameInfo::Game_result::execute_server_side()
 {
-    CONSOLE_INFO("Game status: ", (_gameInfo->gameStatus() ? "Won" : "Lost"))
-	sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::GameWonLost, _gameInfo->gameStatus());
+    CONSOLE_INFO("Game status: ", (_gameInfo->gameStatus(0) == 'w' ? "Won" : "Lost")) //! to adapt
+	sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::GameWonLost, _gameInfo->gameStatus(0) == 'w'); //! to adapt
 }

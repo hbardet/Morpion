@@ -159,11 +159,6 @@ void Rtype::udpServer::setHandleGameInfoMap() {
         join_cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _clients->at(get_sender_client_id())->getAckToSend());
         join_cmd->setClientInfo(_clients->at(get_sender_client_id()));
         _network->addCommandToInvoker(std::move(join_cmd));
-        if (join_game) {
-            CONSOLE_INFO("Player is joining game: ", id_room)
-            CONSOLE_INFO("Player is spawning in game: ", id_room)
-            //! Spawn mob of the game
-        }
     };
 
     _handleGameInfoMap[Utils::GameInfoEnum::ClientDisconnect] = [this](Utils::Network::Response clientResponse) {
@@ -201,6 +196,16 @@ void Rtype::udpServer::setHandleGameInfoMap() {
 
 void Rtype::udpServer::setHandlePlayerMap() {
     _handlePlayerMap[Utils::PlayerEnum::SetPawn] = [this](Utils::Network::Response clientResponse) {
+        std::unique_ptr<Rtype::Command::Player::SetPawn> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::SetPawn, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::SetPawn);
+        int pos = clientResponse.PopParam<int>();
+        int gameID = _clients->at(get_sender_client_id())->getRoom();
+
+        cmd->set_server(_games->at(gameID)->getPlayers(), pos, get_sender_client_id());
+        cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+        _network->addCommandToInvoker(std::move(cmd));
+        _games->at(gameID)->placePawn(pos, get_sender_client_id());
+        if (_games->at(gameID)->gameStatus(get_sender_client_id()) != '\t')
+            std::cout << "PLAYER " << get_sender_client_id() << (_games->at(gameID)->gameStatus(get_sender_client_id()) == 'w' ? "Won" : "Lost") << std::endl;
    };
 }
 

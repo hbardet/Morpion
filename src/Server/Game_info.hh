@@ -40,25 +40,20 @@ namespace Rtype
             Game_info(int id);
             ~Game_info();
 
-            Game_info(const Game_info&) = delete;
-            Game_info& operator=(const Game_info&) = delete;
+            // Game_info(const Game_info&) = delete;
+            // Game_info& operator=(const Game_info&) = delete;
 
-            Game_info(Game_info&& other) noexcept;
-            Game_info& operator=(Game_info&& other) noexcept;
-
-            void computeGame(int currentGameTimeInSeconds);
-            void computePlayer(void);
-            void computeTick(void);
+            // Game_info(Game_info&& other) noexcept;
+            // Game_info& operator=(Game_info&& other) noexcept;
 
             void setNetwork(std::shared_ptr<Rtype::Network> network);
             std::shared_ptr<Rtype::Game> getGame();
 
             void runGame();
+            void placePawn(int coo, int player);
 
-            bool gameStatus(void);
-            void goNextLevel(void);
-            int getLevel(void);
             int getRoomId(void);
+            char gameStatus(int id);
             bool isGameAvailable(void);
             bool getToSetNetwork();
             std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> getPlayers(void);
@@ -67,22 +62,12 @@ namespace Rtype
             void connectPlayer(std::shared_ptr<Rtype::client_info> player);
             void disconnectPlayer(int id);
 
-            int getNbProjectiles();
-            void accNbProjectiles();
-
         protected:
         private:
             int _id;
-            int _level;
-            int _nbProjectiles; //! tmp
-            unsigned int _tick;
-            unsigned int _timeLastLevelEnded;
-            std::thread _tickThread;
+            std::map<char, char> _map;
             std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> _players;
             std::shared_ptr<Rtype::Network> _network;
-            LoadData _loadData;
-            std::stack<Rtype::EnemySpawnData> _enemySpawnData;
-            std::size_t _nextEnemyIndex;
             std::shared_ptr<Rtype::Game> _game;
             bool _toSetNetwork;
             std::thread _gameThread;

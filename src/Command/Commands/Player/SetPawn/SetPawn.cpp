@@ -7,17 +7,16 @@
 
 #include "SetPawn.hh"
 
-void Rtype::Command::Player::SetPawn::set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> players, int coo)
+void Rtype::Command::Player::SetPawn::set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> players, int coo, int id)
 {
     _players = players;
     _coo = coo;
+    _id = id;
 }
 
-void Rtype::Command::Player::SetPawn::set_client(udp::endpoint endpoint, int coo, int id)
+void Rtype::Command::Player::SetPawn::set_client(int coo)
 {
-    _endpoint = endpoint;
     _coo = coo;
-    _id = id;
 }
 
 Rtype::Command::Player::SetPawn::~SetPawn()

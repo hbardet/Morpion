@@ -29,8 +29,8 @@ namespace Rtype
                     SetPawn() = default;
                     ~SetPawn();
 
-                    void set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> players, int coo);
-                    void set_client(udp::endpoint endpoint, int coo, int id);
+                    void set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> players, int coo, int id);
+                    void set_client(int coo);
 
                     void execute_client_side();
                     void execute_server_side();

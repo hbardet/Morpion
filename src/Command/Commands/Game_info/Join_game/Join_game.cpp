@@ -37,12 +37,12 @@ void Rtype::Command::GameInfo::Join_game::execute_server_side()
 {
     if (!_exist) {
         CONSOLE_INFO("", "No room matching this ID")
-	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::JoinGame, false, 0, 0);
+	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::JoinGame, false);
     } else if (!_gameInfo->isGameAvailable()) {
         CONSOLE_INFO(_gameInfo->getRoomId(), " is not available : max player number reach")
-	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::JoinGame, false, 0, 0);
+	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::JoinGame, false);
     } else {
         _gameInfo->connectPlayer(_clientInfo);
-	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::JoinGame, true, _gameInfo->getLevel(), _gameInfo->getNbProjectiles());
+	    sendToEndpoint(*_clientInfo, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::JoinGame, true);
     }
 }

@@ -38,36 +38,6 @@ void Rtype::client_info::setId(int id)
 	_id = id;
 }
 
-float Rtype::client_info::getX() const
-{
-	return _x;
-}
-
-void Rtype::client_info::setX(float x)
-{
-	_x = x;
-}
-
-void Rtype::client_info::moveX(float x)
-{
-	_x += x;
-}
-
-float Rtype::client_info::getY() const
-{
-	return _y;
-}
-
-void Rtype::client_info::setY(float y)
-{
-	_y = y;
-}
-
-void Rtype::client_info::moveY(float y)
-{
-	_y += y;
-}
-
 int Rtype::client_info::getAckToExpect() const
 {
 	return _AckExpected;
@@ -122,13 +92,4 @@ void Rtype::client_info::setAddr(std::string address)
 	_addr = address;
 }
 
-bool Rtype::client_info::isAlive() const
-{
-	return _isAlive;
-}
-
-void Rtype::client_info::setAliveStatus(bool is_alive)
-{
-	_isAlive = is_alive;
-}
 

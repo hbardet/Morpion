@@ -79,48 +79,6 @@ namespace Rtype {
             void setId(int id);
 
             /**
-             * @brief Gets the X coordinate of the client.
-             * 
-             * @return The X coordinate.
-             */
-            float getX() const;
-
-            /**
-             * @brief Sets the X coordinate of the client.
-             * 
-             * @param x The new X coordinate.
-             */
-            void setX(float x);
-
-            /**
-             * @brief Moves the X coordinate of the client.
-             * 
-             * @param x The Add x to X coordinate.
-             */
-            void moveX(float x);
-
-            /**
-             * @brief Gets the Y coordinate of the client.
-             * 
-             * @return The Y coordinate.
-             */
-            float getY() const;
-
-            /**
-             * @brief Sets the Y coordinate of the client.
-             * 
-             * @param y The new Y coordinate.
-             */
-            void setY(float y);
-
-            /**
-             * @brief Moves the Y coordinate of the client.
-             * 
-             * @param x The Add y to Y coordinate.
-             */
-            void moveY(float y);
-
-            /**
              * @brief Gets the expected ACK number for the client.
              * 
              * @return The expected ACK number.
@@ -185,10 +143,6 @@ namespace Rtype {
              * @param address The new IP address.
              */
             void setAddr(std::string address);
-
-            bool isAlive() const;
-
-            void setAliveStatus(bool is_alive);
 
             /**
              * @brief Adds a command to the client's command history.

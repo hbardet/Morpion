@@ -13,62 +13,30 @@
 #include <vector>
 
 Rtype::Game_info::Game_info():
-	_id(-1), _level(0), _nbProjectiles(100), _tick(0), _timeLastLevelEnded(0), _players(), _nextEnemyIndex(0), _toSetNetwork(true)
+	_id(-1), _players(), _toSetNetwork(true)
 {
 }
 
 Rtype::Game_info::Game_info(int id):
-	_id(id), _level(0), _nbProjectiles(100), _tick(0), _timeLastLevelEnded(0), _players(), _nextEnemyIndex(0), _toSetNetwork(true)
+	_id(id), _players(), _toSetNetwork(true)
 {
-    _loadData.LoadDataFromFile("stage1.json");
-    _enemySpawnData = _loadData.GetEnemySpawnData();
-	_tickThread = std::thread([this]() { computeTick(); });
+    for (int i = 0; i < 9; i++)
+        _map[i] = 0;
 }
 
 Rtype::Game_info::~Game_info()
 {
-	if (_tickThread.joinable()) {
-        _tickThread.join();
-    }
 	if (_gameThread.joinable()) {
         _gameThread.join();
     }
 }
 
-Rtype::Game_info::Game_info(Game_info &&other) noexcept:
-	_id(other._id), _level(other._level), _tick(other._tick),
-    _timeLastLevelEnded(other._timeLastLevelEnded), _tickThread(std::move(other._tickThread)), _players(std::move(other._players)), _toSetNetwork(other._toSetNetwork)
+// }
+void Rtype::Game_info::placePawn(int coo, int player)
 {
-    other._id = -1;
-    other._level = 0;
-    other._nbProjectiles = 100;
-    other._tick = 0;
-    other._timeLastLevelEnded = 0;
-    other._nextEnemyIndex = 0;
-}
-
-Rtype::Game_info &Rtype::Game_info::operator=(Game_info &&other) noexcept
-{
-    if (this != &other) {
-        if (_tickThread.joinable()) {
-            _tickThread.join();
-        }
-
-        _id = other._id;
-        _level = other._level;
-        _tick = other._tick;
-        _tickThread = std::move(other._tickThread);
-        _players = std::move(other._players);
-		_toSetNetwork = other._toSetNetwork;
-        _nbProjectiles = other._nbProjectiles;
-        _nextEnemyIndex = other._nextEnemyIndex;
-        _timeLastLevelEnded = other._timeLastLevelEnded;
-
-        other._id = -1;
-        other._level = 0;
-        other._tick = 0;
-    }
-    return *this;
+    if (coo >= 9 || _map[coo] != 0)
+        return;
+    _map[coo] = player;
 }
 
 bool Rtype::Game_info::getToSetNetwork()
@@ -93,67 +61,34 @@ void Rtype::Game_info::runGame()
 	_gameThread = std::thread([this]() { _game->runServer(); });
 }
 
-void Rtype::Game_info::computeGame(int currentGameTimeInSeconds)
+char Rtype::Game_info::gameStatus(int id)
 {
-}
+    if (_map[0] == _map[1] && _map[2] == _map[1])
+        return (_map[0] == id ? 'w' : 'l');
+    if (_map[3] == _map[4] && _map[5] == _map[4])
+        return (_map[3] == id ? 'w' : 'l');
+    if (_map[6] == _map[7] && _map[8] == _map[7])
+        return (_map[6] == id ? 'w' : 'l');
 
-void Rtype::Game_info::computePlayer()
-{
-}
+    if (_map[0] == _map[3] && _map[6] == _map[3])
+        return (_map[0] == id ? 'w' : 'l');
+    if (_map[1] == _map[4] && _map[7] == _map[4])
+        return (_map[1] == id ? 'w' : 'l');
+    if (_map[2] == _map[5] && _map[8] == _map[5])
+        return (_map[2] == id ? 'w' : 'l');
 
-void Rtype::Game_info::computeTick(void)
-{
-    int currentGameTimeInSeconds = 0;
+    if (_map[0] == _map[4] && _map[8] == _map[0])
+        return (_map[0] == id ? 'w' : 'l');
+    if (_map[2] == _map[4] && _map[6] == _map[2])
+        return (_map[2] == id ? 'w' : 'l');
 
-    while (true) {
-        {
-            std::lock_guard<std::mutex> lock(_playersMutex);
-            if (!_players || _players->empty()) 
-                continue;
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        _tick += 1;
-        currentGameTimeInSeconds = _tick / 20;
-        computeGame(currentGameTimeInSeconds);
-        if (_tick % 20 == 0)
-            computePlayer();
-        if (_tick == MAX_UINT32 - 1) {
-            _tick = 0;
-            _timeLastLevelEnded = 0;
-        }
-    }
+    return 't';
 }
 
 bool Rtype::Game_info::isGameAvailable(void)
 {
     std::lock_guard<std::mutex> lock(_playersMutex);
 	return !(_players->max_size() == 2);
-}
-
-bool Rtype::Game_info::gameStatus(void)
-{
-	return true;
-}
-
-void Rtype::Game_info::goNextLevel(void)
-{
-    const std::string nextLevel = "stage" + std::to_string(_level + 1) + ".json";
-
-    _loadData.clearEnemySpawnData();
-    _level += 1;
-    _loadData.LoadDataFromFile(nextLevel);
-    _enemySpawnData = _loadData.GetEnemySpawnData();
-    if (_enemySpawnData.empty()) {
-        _loadData.clearEnemySpawnData();
-        _level = 1;
-        _loadData.LoadDataFromFile("stage1.json");
-        _enemySpawnData = _loadData.GetEnemySpawnData();
-    }
-}
-
-int Rtype::Game_info::getLevel(void)
-{
-	return _level;
 }
 
 int Rtype::Game_info::getRoomId(void)
@@ -170,8 +105,6 @@ void Rtype::Game_info::connectPlayer(std::shared_ptr<Rtype::client_info> player)
 		_players = std::make_shared<std::map<int, std::shared_ptr<Rtype::client_info>>>();
 	_players->insert({player->getId(), player});
 	player->setRoom(_id);
-	player->setX(-10.);
-	player->setY(0.);
 }
 
 std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> Rtype::Game_info::getPlayers(void) {
@@ -184,8 +117,6 @@ void Rtype::Game_info::disconnectPlayer(int id)
     if (_players->find(id) != _players->end()) {
         auto player = _players->find(id)->second;
       	player->setRoom(-1);
-		player->setX(42.);
-		player->setY(42.);
 		_players->erase(id);  
     }
 }
@@ -194,14 +125,3 @@ int Rtype::Game_info::getNbMaxPlayers()
 {
     return 2;
 }
-
-int Rtype::Game_info::getNbProjectiles()
-{
-    return _nbProjectiles;
-}
-
-void Rtype::Game_info::accNbProjectiles()
-{
-    _nbProjectiles += 1;
-}
-
