@@ -11,7 +11,7 @@ set(LIB_CMD_SRC
     ./Commands/Game_info/Client_connection/Client_connection.cpp
     ./Commands/Game_info/Client_disconnect/Client_disconnect.cpp
     ./Commands/Game_info/Missing_packages/Missing_packages.cpp
-    ./Commands/Player/Attack/Attack.cpp
+    ./Commands/Player/SetPawn/SetPawn.cpp
     ./Invoker/Command_invoker.cpp
     ../Utils/ParametersMap/ParametersMap.cpp
 )

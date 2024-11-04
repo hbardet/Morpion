@@ -17,7 +17,7 @@ Rtype::Command::Factory::Factory()
     _commandMap[{static_cast<uint8_t>(Utils::InfoTypeEnum::GameInfo), static_cast<uint8_t>(Utils::GameInfoEnum::ClientDisconnect)}] = []() {return std::make_unique<GameInfo::Client_disconnect>();};
     _commandMap[{static_cast<uint8_t>(Utils::InfoTypeEnum::GameInfo), static_cast<uint8_t>(Utils::GameInfoEnum::MissingPackages)}] = []() {return std::make_unique<GameInfo::Missing_packages>();};
 
-    _commandMap[{static_cast<uint8_t>(Utils::InfoTypeEnum::Player), static_cast<uint8_t>(Utils::PlayerEnum::PlayerAttack)}] = []() {return std::make_unique<Player::Attack>();};
+    _commandMap[{static_cast<uint8_t>(Utils::InfoTypeEnum::Player), static_cast<uint8_t>(Utils::PlayerEnum::SetPawn)}] = []() {return std::make_unique<Player::SetPawn>();};
 }
 
 std::unique_ptr<Rtype::Command::ACommand> Rtype::Command::Factory::createCommand(uint8_t cmd_category, uint8_t cmd_index)

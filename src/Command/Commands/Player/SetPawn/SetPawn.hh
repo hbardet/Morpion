@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** R-Type
 ** File description:
-** Attack
+** SetPawn
 */
 
 #pragma once
@@ -24,13 +24,13 @@ namespace Rtype
     {
         namespace Player
         {
-            class Attack: public ACommand{
+            class SetPawn: public ACommand{
                 public:
-                    Attack() = default;
-                    ~Attack();
+                    SetPawn() = default;
+                    ~SetPawn();
 
-                    void set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> players, int projectileID);
-                    void set_client(udp::endpoint endpoint, int projectileID);
+                    void set_server(std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> players, int coo);
+                    void set_client(udp::endpoint endpoint, int coo, int id);
 
                     void execute_client_side();
                     void execute_server_side();
@@ -39,7 +39,8 @@ namespace Rtype
                 private:
                     udp::endpoint _endpoint;
                     std::shared_ptr<std::map<int, std::shared_ptr<Rtype::client_info>>> _players;
-                    int _projectileID;
+                    int _coo;
+                    int _id;
             };
         }
     }

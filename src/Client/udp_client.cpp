@@ -226,10 +226,9 @@ void Rtype::udpClient::setHandleGameInfoMap()
 
 void Rtype::udpClient::setHandlePlayerMap()
 {
-    _handlePlayerMap[Utils::PlayerEnum::PlayerAttack] = [this](Utils::Network::Response response) {
-        std::unique_ptr<Rtype::Command::Player::Attack> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::Attack, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::PlayerAttack);
+    _handlePlayerMap[Utils::PlayerEnum::SetPawn] = [this](Utils::Network::Response response) {
+        std::unique_ptr<Rtype::Command::Player::SetPawn> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::SetPawn, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::SetPawn);
 
-        int missileId = response.PopParam<int>();
     };
 }
 

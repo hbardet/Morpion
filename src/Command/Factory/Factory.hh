@@ -32,7 +32,7 @@
 #include "../Commands/Game_info/Client_disconnect/Client_disconnect.hh"
 #include "../Commands/Game_info/Missing_packages/Missing_packages.hh"
 
-#include "../Commands/Player/Attack/Attack.hh"
+#include "../Commands/Player/SetPawn/SetPawn.hh"
 
 namespace Rtype
 {

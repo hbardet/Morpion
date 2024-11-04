@@ -20,10 +20,6 @@ namespace Utils
     enum class InfoTypeEnum: uint8_t {
         GameInfo = 0,
         Player,
-        Enemy,
-        Boss,
-        PowerUp,
-        Projectile,
     };
 
     // Enums for various game-related functions.
@@ -39,7 +35,7 @@ namespace Utils
 
     // Enums for player-related functions.
     enum class PlayerEnum: uint8_t {
-        PlayerAttack = 0
+        SetPawn = 0
     };
 
     /**
@@ -79,7 +75,7 @@ namespace Utils
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::ClientDisconnect)}, {"", "i"}},
                     {{InfoTypeEnum::GameInfo, static_cast<uint8_t>(GameInfoEnum::MissingPackages)}, {"llll", ""}},
 
-                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::PlayerAttack)}, {"i", "ii"}},
+                    {{InfoTypeEnum::Player, static_cast<uint8_t>(PlayerEnum::SetPawn)}, {"i", "ii"}},
                 };
             }
 
