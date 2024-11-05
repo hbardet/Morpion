@@ -638,17 +638,10 @@ void Rtype::Game::initPlayOption(void)
     _core->addComponent(createGame, ECS::Components::Button{Rectangle{350, 190, 300, 60}, true, [this]() {
         std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
 
-<<<<<<< HEAD
         cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
         cmd->set_client();
         _network->addCommandToInvoker(std::move(cmd));
         CONSOLE_INFO("Create game: ", " Sended")
-=======
-            cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-            cmd->set_client();
-            _network->addCommandToInvoker(std::move(cmd));
-            CONSOLE_INFO("Create game: ", " Sended")
->>>>>>> 4993472e88bb6cef1d16d9b108fc0aaf926b6ec6
         initGame(1);
     }});
 
@@ -805,6 +798,7 @@ void Rtype::Game::initGame(int id)
             _vecBoxMorpion.push_back(box);
         }
     }
+
 }
 
 void Rtype::Game::run()
@@ -812,6 +806,7 @@ void Rtype::Game::run()
     // std::thread musicThread(&Rtype::Game::loadMusic, this);
 
     // musicThread.join();
+    _vectorMorpion = std::vector<int>(9, -1);
     initMenu();
     while (!_window.ShouldClose() && _isRunning) {
         switch (_currentState) {
@@ -1054,6 +1049,8 @@ void Rtype::Game::updateMorpion()
     int index = 0;
 
     for (auto &entity : _vecIdMorpion){
+        if (index >= 9)
+            break;
         auto &caseGame = _core->getComponent<ECS::Components::Render3D>(entity);
 
         switch (_vectorMorpion[index]) {
@@ -1065,6 +1062,7 @@ void Rtype::Game::updateMorpion()
                 break;
             default:
                 caseGame.setPath("");
+                break;
        }
        index++;
     }
