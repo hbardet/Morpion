@@ -58,7 +58,7 @@ std::shared_ptr<Rtype::Game> Rtype::Game_info::getGame()
 
 void Rtype::Game_info::runGame()
 {
-	_gameThread = std::thread([this]() { _game->runServer(); });
+	// _gameThread = std::thread([this]() { _game->runServer(); });
 }
 
 char Rtype::Game_info::gameStatus(int id)
