@@ -628,12 +628,7 @@ void Rtype::Game::initCreationGame(void)
         //     }
         // }
         // if (_isConnectedToServer) {
-        //     std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
 
-        //     cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-        //     cmd->set_client(_selectedDifficulty + 1, _playerCount);
-        //     _network->addCommandToInvoker(std::move(cmd));
-        //     CONSOLE_INFO("Create game: ", " Sended")
         // }
     }});
 
@@ -656,6 +651,12 @@ void Rtype::Game::initPlayOption(void)
     _core->addComponent(createGame, ECS::Components::Position{400, 200});
     _core->addComponent(createGame, ECS::Components::Text{"Create Game", 30, RAYWHITE});
     _core->addComponent(createGame, ECS::Components::Button{Rectangle{350, 190, 300, 60}, true, [this]() {
+            std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
+
+            cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+            cmd->set_client(_selectedDifficulty + 1, _playerCount);
+            _network->addCommandToInvoker(std::move(cmd));
+            CONSOLE_INFO("Create game: ", " Sended")
         initGame(1);
     }});
 
