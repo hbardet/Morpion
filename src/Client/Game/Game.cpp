@@ -10,6 +10,7 @@
 
 #include "../../Utils/Network/Network.hpp"
 #include <thread>
+#include <vector>
 // #include<unistd.h>
 
 std::size_t ECS::CTypeRegistry::nextTypeIndex = 0;
@@ -19,10 +20,10 @@ std::vector<std::string> options = {"Start Game", "Options", "Quit"};
 
 Rtype::Game::Game(std::shared_ptr<Rtype::Network> network, bool render)
     : _network(network), _isRunning(true), _playerCount(2), _selectedDifficulty(1), _currentState(MENU),
-    _isJoiningGame(false), _isAvailableGames(false), _isRendering(render), _modelCreated(false), _isConnectedToServer(false), _vectorMorpion({-1,-1,-1,-1,-1,-1,-1,-1,-1}), _turnPlayer(false), _collision(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.f})
+    _isJoiningGame(false), _isAvailableGames(false), _isRendering(render), _modelCreated(false), _isConnectedToServer(false), _turnPlayer(false), _collision(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.f})
 {
     _core = std::make_unique<ECS::Core::Core>();
-
+    _vectorMorpion = std::vector<int>(9, -1);
     if (render) {
         SetConfigFlags(FLAG_WINDOW_RESIZABLE);
         SetTargetFPS(60);
@@ -651,12 +652,12 @@ void Rtype::Game::initPlayOption(void)
     _core->addComponent(createGame, ECS::Components::Position{400, 200});
     _core->addComponent(createGame, ECS::Components::Text{"Create Game", 30, RAYWHITE});
     _core->addComponent(createGame, ECS::Components::Button{Rectangle{350, 190, 300, 60}, true, [this]() {
-            std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
+        std::unique_ptr<Rtype::Command::GameInfo::Create_game> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::GameInfo::Create_game, Utils::InfoTypeEnum::GameInfo, Utils::GameInfoEnum::CreateGame);
 
-            cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
-            cmd->set_client(_selectedDifficulty + 1, _playerCount);
-            _network->addCommandToInvoker(std::move(cmd));
-            CONSOLE_INFO("Create game: ", " Sended")
+        cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+        cmd->set_client();
+        _network->addCommandToInvoker(std::move(cmd));
+        CONSOLE_INFO("Create game: ", " Sended")
         initGame(1);
     }});
 
@@ -1571,6 +1572,7 @@ void Rtype::Game::renderMenu() {
 
 void Rtype::Game::placeMorpion(int idPlayer, int pos)
 {
+    std::cout << "place morpion" << std::endl;
     if (pos < 9 && _vectorMorpion[pos] == -1)
         _vectorMorpion[pos] = idPlayer;
     _turnPlayer = !_turnPlayer;
