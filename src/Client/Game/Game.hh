@@ -98,6 +98,7 @@ namespace Rtype {
         void setIsRunning(bool state);
         void equipPod(int playerId, int podId);
         void placeMorpion(int idPlayer, int pos);
+        void setIdPlayer(int id);
 
         std::vector<int> getAIProjectile();
         std::vector<int> getDamagedEntities();

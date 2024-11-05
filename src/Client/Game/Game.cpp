@@ -345,6 +345,17 @@ void Rtype::Game::destroyMusic()
         _core->destroyEntity(entity);
 }
 
+void Rtype::Game::setIdPlayer(int id)
+{
+    _idPlayer = id;
+    if (_idPlayer == 0)
+        _turnPlayer = true;
+    else
+        _turnPlayer = false;
+
+    std::cout << "ID PLAYER: " << _idPlayer << std::endl;
+}
+
 void Rtype::Game::destroyEntityText(void)
 {
     std::vector<std::size_t> entitiesText = _core->getEntitiesWithComponent<ECS::Components::Text>();
@@ -1166,8 +1177,12 @@ void Rtype::Game::updateMorpion()
             raylib::RayCollision tmpCollision(_ray, _vecBoxMorpion[i]);
             if (tmpCollision.GetHit()) {
                 _collision = tmpCollision;
-                if (_turnPlayer)
-                    placeMorpion(_idPlayer, i);
+                if (_turnPlayer) {
+                    std::unique_ptr<Rtype::Command::Player::SetPawn> cmd = CONVERT_ACMD_TO_CMD(Rtype::Command::Player::SetPawn, Utils::InfoTypeEnum::Player, Utils::PlayerEnum::SetPawn);
+                    cmd->setCommonPart(_network->getSocket(), _network->getSenderEndpoint(), _network->getAckToSend());
+                    cmd->set_client(i); //! Index to adapt 0-8
+                    _network->addCommandToInvoker(std::move(cmd));
+                }
                 break;
             }
         }

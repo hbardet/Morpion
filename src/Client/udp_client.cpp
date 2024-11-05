@@ -141,6 +141,7 @@ void Rtype::udpClient::setHandleGameInfoMap()
 
         _id = response.PopParam<int>();
         _game->setIsConnectedToServer(true);
+        _game->setIdPlayer(_id);
         CONSOLE_INFO("Id set on client: ", _id);
     };
 
@@ -206,12 +207,12 @@ void Rtype::udpClient::setHandleGameInfoMap()
 
         _game->destroyEntity(id);
     };
-    
+
     _handleGameInfoMap[Utils::GameInfoEnum::MissingPackages] = [this](Utils::Network::Response response) {
         (void)response;
         std::cerr << "Missing packages should not be recived by the client" << std::endl;
     };
-    
+
     _handleGameInfoMap[Utils::GameInfoEnum::MissingPackages] = [this](Utils::Network::Response response) {
         (void)response;
         std::cerr << "Missing packages should not be recived by the client" << std::endl;
